@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online CMD</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 20px;
+            background-color: black;
+            color: white;
+        }
+
+        #console {
+            width: 400px;
+            height: 300px;
+            overflow: auto;
+            padding: 10px;
+            margin: auto;
+            border: 1px solid white;
+        }
+
+        #inputCommand {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: none;
+            background-color: black;
+            color: white;
+        }
+
+        #submitBtn {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Online CMD</h1>
+    <div id="console"></div>
+    <input type="text" id="inputCommand" placeholder="Saisissez votre commande">
+    <button onclick="sendCommand()" id="submitBtn">Envoyer</button>
+
+    <script>
+        // Fonction pour ajouter un écouteur d'événements pour la touche "Entrée"
+        document.getElementById("inputCommand").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                sendCommand();
+            }
+        });
+
+        function sendCommand() {
+            var commandInput = document.getElementById("inputCommand");
+            var consoleOutput = document.getElementById("console");
+
+            // Récupérer la commande de l'utilisateur
+            var command = commandInput.value;
+
+            // Afficher la commande dans la console
+            printToConsole("<span style='color: yellow;'> > " + command + "</span>");
+
+            // Exécuter la commande
+            if (command.toLowerCase() === "install") {
+                // Proposer un lien de téléchargement vers un fichier fictif
+                var downloadLink = document.createElement("a");
+                downloadLink.href = "chemin/vers/le/meteor-client-0.5.4.jar"; // Remplacez par le chemin réel de votre fichier
+                downloadLink.download = "meteor-client-0.5.4.jar";
+                downloadLink.innerHTML = "Cliquez ici pour télécharger le fichier";
+                printToConsole(downloadLink.outerHTML);
+            } else {
+                // Autres commandes
+                var response;
+                switch (command.toLowerCase()) {
+                    case "help":
+                        response = "Liste des commandes disponibles :<br>- help : Affiche cette aide<br>- date : Affiche la date actuelle<br>- install : Propose un lien de téléchargement<br>- .install meteor<br>- .install api<br>- .install tac";
+                        break;
+                    case "date":
+                        response = new Date().toLocaleString();
+                        break;
+                    case "install meteor":
+                    var downloadLink = document.createElement("a");
+                downloadLink.href = "./fichier/meteor-client-0.5.4.jar"; // Remplacez par le chemin réel de votre fichier
+                downloadLink.download = "./fichier/meteor-client-0.5.4.jar";
+                downloadLink.innerHTML = "Cliquez ici pour télécharger meteor-client";
+                printToConsole(downloadLink.outerHTML);
+                        break;
+                    case "install api":
+                    var downloadLink = document.createElement("a");
+                downloadLink.href = "./fichier/fabric-api-0.90.7+1.20.1.jar"; // Remplacez par le chemin réel de votre fichier
+                downloadLink.download = "./fichier/fabric-api-0.90.7+1.20.1.jar";
+                downloadLink.innerHTML = "Cliquez ici pour télécharger fabric-api";
+                printToConsole(downloadLink.outerHTML);
+                        break;
+                    case "install tac":
+                    var downloadLink = document.createElement("a");
+                downloadLink.href = "./fichier/tac-r-0.2.1.1-1.16.5.jar"; // Remplacez par le chemin réel de votre fichier
+                downloadLink.download = "./fichier/tac-r-0.2.1.1-1.16.5.jar";
+                downloadLink.innerHTML = "Cliquez ici pour télécharger tac-r";
+                printToConsole(downloadLink.outerHTML);
+                        break;    
+                    default:
+                        response = "Commande inconnue. Tapez 'help' pour afficher l'aide.";
+                }
+
+                // Afficher la réponse dans la console
+                printToConsole(response);
+            }
+
+            
+
+            // Effacer le champ de saisie
+            commandInput.value = "";
+        }
+
+        function printToConsole(message) {
+            var consoleOutput = document.getElementById("console");
+            consoleOutput.innerHTML += "<p>" + message + "</p>";
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+    </script>
+</body>
+</html>
